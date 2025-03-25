@@ -28,12 +28,12 @@ import { AuthGuard } from 'src/auth/guards/auth.guard';
 
 @ApiTags('Users')
 @ApiBearerAuth('JWT-auth')
-@UseGuards(AuthGuard)
 @Controller('users')
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Get()
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get all users',
@@ -53,6 +53,7 @@ export class UserController {
   }
 
   @Get(':id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Get user by ID',
@@ -101,6 +102,7 @@ export class UserController {
   }
 
   @Put(':id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Update user',
@@ -131,6 +133,7 @@ export class UserController {
   }
 
   @Delete(':id')
+  @UseGuards(AuthGuard)
   @HttpCode(HttpStatus.OK)
   @ApiOperation({
     summary: 'Delete user',
