@@ -1,28 +1,20 @@
-import { ConfigService } from '@nestjs/config';
-import { ConfigModule } from '@nestjs/config';
 import { DataSource, DataSourceOptions } from 'typeorm';
+import * as dotenv from 'dotenv';
 
-if (process.env.NODE_ENV === 'development') {
-  ConfigModule.forRoot({
-    envFilePath: `.env.${process.env.NODE_ENV.trim()}`,
-    isGlobal: true,
-  });
-} else {
-  ConfigModule.forRoot({
-    envFilePath: `.env.production`,
-    isGlobal: true,
-  });
-}
+// Cargar variables de entorno basadas en NODE_ENV
+const nodeEnv = process.env.NODE_ENV || 'development';
+const envFile =
+  nodeEnv === 'production' ? '.env.production' : '.env.development';
+dotenv.config({ path: `src/${envFile}` });
 
-const configService = new ConfigService();
 
 export const DataSourceConfig: DataSourceOptions = {
   type: 'postgres',
-  host: configService.get('DB_HOST'),
-  port: configService.get('DB_PORT'),
-  username: configService.get('DB_USER'),
-  password: configService.get('DB_PASSWORD'),
-  database: configService.get('DB_NAME'),
+  host: process.env.DB_HOST,
+  port: parseInt(process.env.DB_PORT || '5432', 10),
+  username: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
   entities: [__dirname + '/../**/**/*.entity{.ts,.js}'],
   migrations: [__dirname + '/../migrations/*{ .ts,.js}'],
   synchronize: true,

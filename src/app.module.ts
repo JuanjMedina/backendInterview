@@ -6,7 +6,9 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceConfig } from './config/data.source';
 
 const envFilePath =
-  process.env.NODE_ENV?.trim() === 'production' ? '.env' : '.env.development';
+  process.env.NODE_ENV?.trim() === 'development'
+    ? '.env.development'
+    : '.env.production';
 
 @Module({
   imports: [
