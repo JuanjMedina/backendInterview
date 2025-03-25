@@ -23,12 +23,15 @@ const envFilePath =
       isGlobal: true,
     }),
     TypeOrmModule.forRoot({ ...DataSourceConfig }),
+
     UsersModule,
     CompaniesModule,
+
+    AuthModule,
+
     ProductsModule,
     DepartmentsModule,
     CitiesModule,
-    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],
